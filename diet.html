@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .diet-plans-section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .diet-plans-section h2 {
+            font-size: 32px;
+            color: #e53935;
+            margin-bottom: 40px;
+        }
+
+        .diet-plan-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .diet-plan-card {
+            background-color: #1f1f1f;
+            padding: 30px;
+            width: 280px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s;
+            text-align: left;
+        }
+
+        .diet-plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+        }
+
+        .diet-plan-card h3 {
+            color: #e53935;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .diet-plan-card p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .diet-plan-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .diet-plan-card ul li {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .btn-diet {
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: #e53935;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-diet:hover {
+            background-color: #c62828;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="diet-plans-section">
+        <h2>Explore Our Diet Plans</h2>
+
+        <div class="diet-plan-cards">
+            <div class="diet-plan-card">
+                <h3>Weight Loss Plan</h3>
+                <p>₹799/month</p>
+                <ul>
+                    <li>Low-carb meal guide</li>
+                    <li>Weekly calorie tracking</li>
+                    <li>Protein-rich recipes</li>
+                </ul>
+                <a href="index.html" class="btn-diet">Back To Home</a>
+            </div>
+            <div class="diet-plan-card">
+                <h3>Muscle Gain Plan</h3>
+                <p>₹999/month</p>
+                <ul>
+                    <li>High-protein meals</li>
+                    <li>Mass gainer shake guide</li>
+                    <li>Daily intake schedule</li>
+                </ul>
+                <a href="index.html" class="btn-diet">Back To Home</a>
+            </div>
+            <div class="diet-plan-card">
+                <h3>Keto Plan</h3>
+                <p>₹899/month</p>
+                <ul>
+                    <li>Keto-based recipes</li>
+                    <li>No sugar or grains</li>
+                    <li>Healthy fats focus</li>
+                </ul>
+                <a href="index.html" class="btn-diet">Back To Home</a>
+            </div>
+            <div class="diet-plan-card">
+                <h3>Immunity Boost Plan</h3>
+                <p>₹699/month</p>
+                <ul>
+                    <li>Vitamin-rich foods</li>
+                    <li>Daily detox drink</li>
+                    <li>Anti-inflammatory recipes</li>
+                </ul>
+                <a href="signup.html" class="btn-diet">Subscribe</a>
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

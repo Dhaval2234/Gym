@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sign Up</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+           background: linear-gradient(120deg, #e53935, #c62828);
+            height: 100vh;
+            display: flex;
+            background: linear-gradient(120deg, #e53935, #c62828);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sign-container {
+            width: 100%;
+            max-width: 400px;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .circle-img {
+            display: block;
+            margin: 0 auto 5px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+
+        .sign-box h2 {
+            text-align: center;
+            margin-bottom: 5px;
+            color: #e53935;
+            font-weight: 700;
+        }
+         
+        form input {
+            width: 100%;
+            padding: 12px 14px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus {
+            border-color: #e53935;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: #e53935;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c62828;
+        }
+
+        p.or-separator {
+            text-align: center;
+            font-weight: 600;
+            color: #888;
+            user-select: none;
+        }
+
+        .google-btn {
+            background-color: #4285F4;
+            color: white;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: none;
+            user-select: none;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            max-width: 400px;
+        }
+
+        .google-btn:hover {
+            background-color: #357ae8;
+        }
+
+        .google-btn img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50px;
+            background: transparent;
+        }
+
+        .sign-box p {
+            text-align: center;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .sign-box a {
+            display: block;
+            text-align: center;
+            color: #e53935;
+            text-decoration: none;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .sign-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sign-container">
+        <div class="sign-box">
+            <img src="images/login.png" alt="Logo" class="circle-img" />
+            <h2>Sign Up</h2>
+
+            <form id="signupForm">
+                <input id="fullName" type="text" placeholder="Full Name" required />
+                <input id="email" type="email" placeholder="Email" required />
+                <input id="password" type="password" placeholder="Create Password" required />
+                <input id="confirmPassword" type="password" placeholder="Confirm Password" required />
+                <button type="submit">Sign Up</button>
+            </form>
+
+            <p class="or-separator">OR</p>
+
+            <div id="googleLogin" class="google-btn" role="button" tabindex="0">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+                Sign up with Google
+            </div>
+
+            <p>Already have an account?</p>
+            <a href="login.html">Login Now</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const supabaseUrl = 'https://tiuywgkphoiosxlekbaf.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpdXl3Z2twaG9pb3N4bGVrYmFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzQ3NjMsImV4cCI6MjA3MDU1MDc2M30.w1DFCFRVOWDuiZCmzChLAc-uS6Ql4Oyo4Q29-lth030';
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        // Google OAuth Login
+        document.getElementById('googleLogin').addEventListener('click', async () => {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    // Make sure this redirect URL is in your Supabase Auth settings whitelist
+                    redirectTo: window.location.origin + '/login.html',
+                }
+            });
+            if (error) {
+                alert('Google login error: ' + error.message);
+            }
+        });
+
+        // Email/Password signup
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Basic validations
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+                return;
+            }
+            if (!/[A-Z]/.test(password)) {
+                alert("Password must contain at least one uppercase letter.");
+                return;
+            }
+            if (!/[0-9]/.test(password)) {
+                alert("Password must contain at least one number.");
+                return;
+            }
+
+            // Sign up with Supabase
+            const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+                options: { data: { full_name: fullName } }
+            });
+
+            if (error) {
+                alert('Signup error: ' + error.message);
+                return;
+            }
+
+            // Insert profile in DB if user created
+            if (data.user) {
+                const { error: profileError } = await supabaseClient.from('profiles').insert({
+                    id: data.user.id,
+                    full_name: fullName,
+                    email: email
+                });
+                if (profileError) {
+                    alert('Profile save error: ' + profileError.message);
+                    return;
+                }
+            }
+
+            alert('Signup successful! Please check your email to confirm your account.');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+
+</html>

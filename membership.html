@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgb(255, 100, 100);
+            margin: 0;
+            padding: 0;
+        }
+
+        .membership-header {
+            text-align: center;
+            background: #e53935;
+            color: white;
+            padding: 48px 16px;
+        }
+
+        .membership-options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+            padding: 48px 16px;
+        }
+
+        .plan {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 32px;
+            width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            transition: 0.3s ease;
+        }
+
+        .plan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan h2 {
+            color: #e53935;
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .plan li {
+            margin: 8px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 9.6px 24px;
+            background: #e53935;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: #c62828;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="membership-header">
+        <h1>Join FitTrack Today</h1>
+        <p>Choose the plan that suits your fitness journey!</p>
+    </header>
+    <section class="membership-options">
+        <div class="plan">
+            <h2>Basic Plan</h2>
+            <p>₹499 / month</p>
+            <ul>
+                <li>Access to gym equipment</li>
+                <li>Weekly group sessions</li>
+                <li>Email support</li>
+            </ul>
+            <a href="book-session.html" class="btn">Join Now</a>
+        </div>
+        <div class="plan">
+            <h2>Standard Plan</h2>
+            <p>₹999 / month</p>
+            <ul>
+                <li>All features of Basic</li>
+                <li>Custom workout & diet plan</li>
+                <li>Dedicated personal trainer</li>
+            </ul>
+            <a href="book-session.html" class="btn">Join Now</a>
+        </div>
+        <div class="plan">
+            <h2>premium Plan</h2>
+            <p>₹999 / month</p>
+            <ul>
+                <li>Everything in Pro Plan</li>
+                <li>24/7 chat support</li>
+                <li>Monthly progress tracking</li>
+            </ul>
+            <a href="book-session.html" class="btn">Join Now</a>
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const supabaseUrl = 'https://tiuywgkphoiosxlekbaf.supabase.co';
+    const supabaseAnonKey = 'YOUR_ANON_KEY';
+    const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+    // Check if user is logged in
+    supabaseClient.auth.getUser().then(({ data }) => {
+        if (!data.user) {
+            // Redirect to login if not signed in
+            window.location.href = 'login.html';
+        }
+    });
+</script>
+
+</body>
+
+</html>

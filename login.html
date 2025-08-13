@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login Now</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(120deg, #e53935, #c62828);
+            font-family: Arial, sans-serif;
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .auth-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .circle-img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .auth-box h2 {
+            margin-bottom: 20px;
+            color: #e53935;
+        }
+
+        .auth-box form input {
+            width: 95%;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+             background: white;
+            border: 1px solid #ccc;
+            color: #555;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 6px;
+        }
+
+        .auth-box form button {
+            width: 100%;
+            padding: 12px;
+            background: #e53935;
+            border: none;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .auth-box form button:hover {
+            background: #c62828;
+        }
+
+        .auth-box form p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .auth-box form a {
+            color: #e53935;
+            text-decoration: none;
+        }
+
+        /* Google button style */
+        .google-btn {
+            background: white;
+            border: 1px solid #ccc;
+            color: #555;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border-radius: 6px;
+        }
+
+        .google-btn img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50px;
+            border-color: black;
+            border-style: solid;
+            background: transparent;
+        }
+        .google-btn:hover {
+            background: #c62828;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <img src="images/login.png" alt="Logo Of Fitness Track" class="circle-img" />
+            <h2>Login to Your Account</h2>
+            <form id="loginForm">
+                <input id="email" type="email" placeholder="Email" required />
+                <input id="password" type="password" placeholder="Password" required />
+                <p>Forgot your password? <a href="reset-password.html">Reset it here</a>.</p>
+                <button type="submit">Login Now</button>
+                <div id="googleLogin" class="google-btn" role="button" tabindex="0">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" />
+                    login with Google
+                </div>
+                <a href="signup.html">Do not have an account? Sign up</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Replace these with your actual Supabase project info
+        const SUPABASE_URL = "https://tiuywgkphoiosxlekbaf.supabase.co";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRpdXl3Z2twaG9pb3N4bGVrYmFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ5NzQ3NjMsImV4cCI6MjA3MDU1MDc2M30.w1DFCFRVOWDuiZCmzChLAc-uS6Ql4Oyo4Q29-lth030";
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Email/Password Login
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                alert("Login failed: " + error.message);
+                return;
+            }
+
+            alert("Login successful!");
+            // Redirect to your dashboard or home page after login
+            window.location.href = "index.html";
+        });
+
+        // Google OAuth Login
+        document.getElementById("googleLogin").addEventListener("click", async () => {
+            const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                provider: "google",
+                options: {
+                    // This URL must be whitelisted in Supabase Auth settings → Redirect URLs
+                    redirectTo: window.location.origin + "/index.html",
+                },
+            });
+
+            if (error) {
+                alert("Google login failed: " + error.message);
+            }
+            // No need to handle success here because OAuth redirects
+        });
+    </script>
+</body>
+
+</html>
